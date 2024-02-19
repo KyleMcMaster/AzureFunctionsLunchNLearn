@@ -6,22 +6,7 @@ Content for Architecture Lunch-n-Learn on Azure Functions
 
 ## Azure Functions CLI
 
-https://learn.microsoft.com/en-us/azure/azure-functions/create-first-function-cli-csharp?tabs=windows%2Cazure-cli
-
-
-Create an HTTP Trigger Function
-
-```ps
-func init EmailFunctions --worker-runtime dotnet-isolated --target-framework net8.0
-```
-
-```ps
-cd EmailFunctions
-```
-
-```ps
-func new --name HttpExample --template "HTTP trigger" --authlevel "anonymous"
-```
+https://learn.microsoft.com/en-us/azure/azure-functions/create-first-function-vs-code-csharp
 
 ## Durable Orchestrations
 
