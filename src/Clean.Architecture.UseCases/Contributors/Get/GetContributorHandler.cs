@@ -2,6 +2,7 @@
 using Ardalis.SharedKernel;
 using Clean.Architecture.Core.ContributorAggregate;
 using Clean.Architecture.Core.ContributorAggregate.Specifications;
+using Clean.Architecture.Core.Contributors;
 
 namespace Clean.Architecture.UseCases.Contributors.Get;
 

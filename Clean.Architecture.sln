@@ -18,9 +18,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Directory.Packages.props = Directory.Packages.props
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clean.Architecture.UseCases", "src\Clean.Architecture.UseCases\Clean.Architecture.UseCases.csproj", "{B74A78FF-B79E-4C38-A9C7-084A90990CAD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Clean.Architecture.UseCases", "src\Clean.Architecture.UseCases\Clean.Architecture.UseCases.csproj", "{B74A78FF-B79E-4C38-A9C7-084A90990CAD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailFunctions", "src\EmailFunctions\EmailFunctions.csproj", "{68CD3AE5-2B9F-4BF8-AA5E-96A07F7B442B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NotificationFunctions", "src\EmailFunctions\NotificationFunctions.csproj", "{68CD3AE5-2B9F-4BF8-AA5E-96A07F7B442B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

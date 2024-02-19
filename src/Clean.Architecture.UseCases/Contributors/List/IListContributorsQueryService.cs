@@ -1,4 +1,6 @@
-﻿namespace Clean.Architecture.UseCases.Contributors.List;
+﻿using Clean.Architecture.Core.Contributors;
+
+namespace Clean.Architecture.UseCases.Contributors.List;
 
 /// <summary>
 /// Represents a service that will actually fetch the necessary data

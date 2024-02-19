@@ -1,4 +1,5 @@
-﻿using Clean.Architecture.UseCases.Contributors;
+﻿using Clean.Architecture.Core.Contributors;
+using Clean.Architecture.UseCases.Contributors;
 using Clean.Architecture.UseCases.Contributors.List;
 
 namespace Clean.Architecture.Infrastructure.Data.Queries;
