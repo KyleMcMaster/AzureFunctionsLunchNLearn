@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.DurableTask.Client;
 using Microsoft.Extensions.Logging;
-using NotificationFunctions;
+using NotificationFunctions.NotificationWorkflow;
 
-namespace NimblePros.NotificationFunctions;
+namespace NotificationFunctions.Triggers;
 
 public class HttpDurableNotificationTrigger(ILogger<HttpDurableNotificationTrigger> logger)
 {
@@ -19,7 +19,7 @@ public class HttpDurableNotificationTrigger(ILogger<HttpDurableNotificationTrigg
     FunctionContext executionContext)
   {
     _logger.LogInformation("C# HTTP trigger function processed a request.");
-    string body = await new StreamReader(req.Body).ReadToEndAsync();
+    var body = await new StreamReader(req.Body).ReadToEndAsync();
     var contributor = JsonSerializer.Deserialize<ContributorDTO>(body, new JsonSerializerOptions(JsonSerializerDefaults.Web));
 
     if (contributor is null)
@@ -27,7 +27,7 @@ public class HttpDurableNotificationTrigger(ILogger<HttpDurableNotificationTrigg
       return new BadRequestResult();
     }
 
-    string instanceId = await client.ScheduleNewOrchestrationInstanceAsync(nameof(NotificationOrchestration), contributor);
+    var instanceId = await client.ScheduleNewOrchestrationInstanceAsync(nameof(NotificationOrchestration), contributor);
     _logger.LogInformation("Created new orchestration with instance ID = {instanceId}", instanceId);
 
     return new OkObjectResult(new { InstanceId = instanceId });

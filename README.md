@@ -27,3 +27,8 @@ https://learn.microsoft.com/en-us/azure/azure-functions/durable/durable-function
 ### Azurite 
 
 https://learn.microsoft.com/en-us/azure/storage/common/storage-use-azurite?tabs=visual-studio-code%2Cblob-storage
+
+```
+docker run -p 10000:10000 -p 10001:10001 -p 10002:10002 \
+    -v c:/azurite:/data mcr.microsoft.com/azure-storage/azurite
+```

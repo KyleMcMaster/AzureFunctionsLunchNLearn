@@ -3,7 +3,7 @@ using Microsoft.Azure.Functions.Worker;
 using Microsoft.DurableTask;
 using Microsoft.Extensions.Logging;
 
-namespace NimblePros.NotificationFunctions;
+namespace NotificationFunctions.NotificationWorkflow;
 
 public class NotificationOrchestration
 {
@@ -15,7 +15,7 @@ public class NotificationOrchestration
     var contributor = context.GetInput<ContributorDTO>()!;
     var logger = context.CreateReplaySafeLogger<NotificationOrchestration>();
 
-    logger.LogDebug($"Executing Activity {nameof(SayHello)} for contributor {contributor.Name}");
+    logger.LogInformation($"Executing Activity {nameof(SayHello)} for contributor {contributor.Name}");
     await context.CallActivityAsync(nameof(SayHello), contributor.Name);
 
     if (contributor.PhoneNumber is null)
@@ -24,14 +24,21 @@ public class NotificationOrchestration
       return;
     }
 
-    await context.CallActivityAsync(nameof(AuditPhoneNumberForCompliance), contributor.PhoneNumber, _retryPolicy);
+    await context.CallActivityAsync(nameof(AuditPhoneNumberForComplianceMethod), contributor.PhoneNumber, _retryPolicy);
   }
 
   [Function(nameof(SayHello))]
   public static void SayHello([ActivityTrigger] string contributorName, FunctionContext executionContext)
   {
-    string message = $"Hello {contributorName}. 👋 Thanks for your contributions!";
+    var message = $"Hello {contributorName}. 👋 Thanks for your contributions!";
     var logger = executionContext.GetLogger(nameof(SayHello));
     logger.LogInformation(message); // Pretending that this notification is sent to the contributor
+  }
+
+  [Function(nameof(AuditPhoneNumberForComplianceMethod))]
+  public void AuditPhoneNumberForComplianceMethod([ActivityTrigger] string phoneNumber, FunctionContext executionContext)
+  {
+    var logger = executionContext.GetLogger<AuditPhoneNumberForCompliance>();
+    logger.LogInformation($"Auditing phone number: {phoneNumber} from Activity {nameof(AuditPhoneNumberForCompliance)}");
   }
 }

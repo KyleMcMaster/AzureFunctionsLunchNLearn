@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
 
-namespace NimblePros.NotificationFunctions;
+namespace NotificationFunctions.Triggers;
 
 public class HttpNotificationTrigger(ILogger<HttpNotificationTrigger> logger)
 {
@@ -15,7 +15,7 @@ public class HttpNotificationTrigger(ILogger<HttpNotificationTrigger> logger)
   public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequest req)
   {
     _logger.LogInformation("C# HTTP trigger function processed a request.");
-    string body = await new StreamReader(req.Body).ReadToEndAsync();
+    var body = await new StreamReader(req.Body).ReadToEndAsync();
     var contributor = JsonSerializer.Deserialize<ContributorDTO>(body, new JsonSerializerOptions(JsonSerializerDefaults.Web));
 
     if (contributor is null)
@@ -23,7 +23,7 @@ public class HttpNotificationTrigger(ILogger<HttpNotificationTrigger> logger)
       return new BadRequestResult();
     }
 
-    string message = $"Hello {contributor.Name}. 👋 Thanks for your contributions!";
+    var message = $"Hello {contributor.Name}. 👋 Thanks for your contributions!";
     _logger.LogInformation(message); // Pretending that this notification is sent to the contributor
 
     return new OkObjectResult(new { Message = message });
