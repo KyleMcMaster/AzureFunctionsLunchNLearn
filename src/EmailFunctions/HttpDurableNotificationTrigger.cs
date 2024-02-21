@@ -1,10 +1,8 @@
 ﻿using System.Text.Json;
-using Clean.Architecture.Core.ContributorAggregate;
 using Clean.Architecture.Core.Contributors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Functions.Worker;
-using Microsoft.DurableTask;
 using Microsoft.DurableTask.Client;
 using Microsoft.Extensions.Logging;
 using NotificationFunctions;
@@ -29,11 +27,22 @@ public class HttpDurableNotificationTrigger(ILogger<HttpDurableNotificationTrigg
       return new BadRequestResult();
     }
 
-    string instanceId = await client.ScheduleNewOrchestrationInstanceAsync(nameof(NotificationOrchestrator.SayHello), contributor);
+    string instanceId = await client.ScheduleNewOrchestrationInstanceAsync(nameof(NotificationOrchestration), contributor);
     _logger.LogInformation("Created new orchestration with instance ID = {instanceId}", instanceId);
-
-    // var status = client.CreateCheckStatusResponse(req, instanceId);
 
     return new OkObjectResult(new { InstanceId = instanceId });
   }
 }
+
+/*
+{
+    "name":"ExecuteAs",
+    "instanceId":"7f99f9474a6641438e5c7169b7ecb3f2",
+    "runtimeStatus":"Completed",
+    "input":null,
+    "customStatus":null,
+    "output":"Hello, Tokyo! Hello, London! Hello, Seattle!",
+    "createdTime":"2023-01-31T18:48:49Z",
+    "lastUpdatedTime":"2023-01-31T18:48:56Z"
+}
+*/
