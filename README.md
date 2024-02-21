@@ -12,6 +12,10 @@ Doesn't build out of the box! Time to try something else.
 
 https://learn.microsoft.com/en-us/azure/azure-functions/create-first-function-vs-code-csharp
 
+Still doesn't bind with serialization
+
+https://www.nuget.org/packages/Microsoft.Azure.Functions.Worker.Extensions.Http.AspNetCore/
+
 Closer! But still doesn't work, requires some missing packages not present in the template code. Used this as my example to get it working.
 
 https://github.com/Azure/azure-functions-dotnet-worker/blob/main/samples/FunctionApp/HttpTriggerWithDependencyInjection/HttpTriggerWithDependencyInjection.cs

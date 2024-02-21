@@ -3,8 +3,10 @@ using Ardalis.ListStartupServices;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Clean.Architecture.Core;
+using Clean.Architecture.Core.Interfaces;
 using Clean.Architecture.Infrastructure;
 using Clean.Architecture.Infrastructure.Data;
+using Clean.Architecture.Infrastructure.Notifications;
 using FastEndpoints;
 using FastEndpoints.Swagger;
 using Serilog;
@@ -46,6 +48,14 @@ builder.Services.Configure<ServiceConfig>(config =>
   // optional - default path to view services is /listallservices - recommended to choose your own path
   config.Path = "/listservices";
 });
+
+
+
+builder.Services.AddHttpClient<INotificationService, NotificationsService>(client =>
+{
+  client.BaseAddress = new Uri("http://localhost:7152/");
+});
+
 
 
 builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>

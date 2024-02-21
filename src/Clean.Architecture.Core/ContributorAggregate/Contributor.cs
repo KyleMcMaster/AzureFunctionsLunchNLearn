@@ -11,6 +11,11 @@ public class Contributor(string name) : EntityBase, IAggregateRoot
   public ContributorStatus Status { get; private set; } = ContributorStatus.NotSet;
   public PhoneNumber? PhoneNumber { get; private set; }
 
+  public Contributor(string name, PhoneNumber phoneNumber) : this(name)
+  {
+    PhoneNumber = phoneNumber;
+  }
+
   public void SetPhoneNumber(string phoneNumber)
   {
     PhoneNumber = new PhoneNumber(string.Empty, phoneNumber, string.Empty);
@@ -40,6 +45,6 @@ public class PhoneNumber : ValueObject
   {
     yield return CountryCode;
     yield return Number;
-    yield return Extension ?? String.Empty;
+    yield return Extension ?? string.Empty;
   }
 }
