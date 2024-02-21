@@ -23,3 +23,7 @@ https://github.com/Azure/azure-functions-dotnet-worker/blob/main/samples/Functio
 ## Durable Orchestrations
 
 https://learn.microsoft.com/en-us/azure/azure-functions/durable/durable-functions-isolated-create-first-csharp?pivots=code-editor-vscode
+
+### Azurite 
+
+https://learn.microsoft.com/en-us/azure/storage/common/storage-use-azurite?tabs=visual-studio-code%2Cblob-storage

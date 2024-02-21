@@ -17,6 +17,6 @@ public class NotificationsService : INotificationService
   public async Task SendSmsNotification(Contributor contributor)
   {
     var dto = new ContributorDTO(contributor.Id, contributor.Name, contributor.PhoneNumber?.Number);
-    var result = await _httpClient.PostAsJsonAsync("api/HttpNotificationTrigger", dto);
+    await _httpClient.PostAsJsonAsync("api/HttpNotificationTrigger", dto);
   }
 }
