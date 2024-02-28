@@ -4,10 +4,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
+using NotificationFunctions.DemoServices;
 
 namespace NotificationFunctions.Triggers;
 
-public class HttpNotificationTrigger(ILogger<HttpNotificationTrigger> logger)
+public class HttpNotificationTrigger(ILogger<HttpNotificationTrigger> logger, ISmsNotificationService notificationService)
 {
   private readonly ILogger<HttpNotificationTrigger> _logger = logger;
 
@@ -16,7 +17,8 @@ public class HttpNotificationTrigger(ILogger<HttpNotificationTrigger> logger)
   {
     _logger.LogInformation("C# HTTP trigger function processed a request.");
     var body = await new StreamReader(req.Body).ReadToEndAsync();
-    var contributor = JsonSerializer.Deserialize<ContributorDTO>(body, new JsonSerializerOptions(JsonSerializerDefaults.Web));
+    var options = new JsonSerializerOptions(JsonSerializerDefaults.Web);
+    var contributor = JsonSerializer.Deserialize<ContributorDTO>(body, options);
 
     if (contributor is null)
     {
@@ -24,7 +26,7 @@ public class HttpNotificationTrigger(ILogger<HttpNotificationTrigger> logger)
     }
 
     var message = $"Hello {contributor.Name}. 👋 Thanks for your contributions!";
-    _logger.LogInformation(message); // Pretending that this notification is sent to the contributor
+    await notificationService.SendSmsNotification(contributor.PhoneNumber!, message);
 
     return new OkObjectResult(new { Message = message });
   }

@@ -5,11 +5,11 @@ using Clean.Architecture.Core.Interfaces;
 
 namespace Clean.Architecture.Infrastructure.Notifications;
 
-public class NotificationsService : INotificationService
+public class AzureFunctionNotificationService : INotificationService
 {
   private readonly HttpClient _httpClient;
 
-  public NotificationsService(HttpClient httpClient)
+  public AzureFunctionNotificationService(HttpClient httpClient)
   {
     _httpClient = httpClient;
   }

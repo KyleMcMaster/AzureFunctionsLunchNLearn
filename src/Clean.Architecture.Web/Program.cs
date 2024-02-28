@@ -51,7 +51,7 @@ builder.Services.Configure<ServiceConfig>(config =>
 
 
 
-builder.Services.AddHttpClient<INotificationService, NotificationsService>(client =>
+builder.Services.AddHttpClient<INotificationService, AzureFunctionNotificationService>(client =>
 {
   client.BaseAddress = new Uri("http://localhost:7152/");
 });
