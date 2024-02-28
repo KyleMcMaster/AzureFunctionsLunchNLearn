@@ -34,6 +34,8 @@ public class HttpDurableNotificationTrigger(ILogger<HttpDurableNotificationTrigg
   }
 }
 
+// var status = await client.CreateCheckStatusResponse(req, instanceId);
+
 /*
 {
     "name":"ExecuteAs",

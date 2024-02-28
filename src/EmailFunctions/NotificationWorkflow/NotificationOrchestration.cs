@@ -2,12 +2,20 @@
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.DurableTask;
 using Microsoft.Extensions.Logging;
+using NotificationFunctions.DemoServices;
 
 namespace NotificationFunctions.NotificationWorkflow;
 
 public class NotificationOrchestration
 {
   private static readonly TaskOptions _retryPolicy = new(new TaskRetryOptions(new RetryPolicy(maxNumberOfAttempts: 2, TimeSpan.FromSeconds(15))));
+
+  private readonly ISmsNotificationService _notificationService;
+
+  public NotificationOrchestration(ISmsNotificationService notificationService)
+  {
+    _notificationService = notificationService;
+  }
 
   [Function(nameof(NotificationOrchestration))]
   public static async Task RunAsync([OrchestrationTrigger] TaskOrchestrationContext context)
@@ -28,11 +36,11 @@ public class NotificationOrchestration
   }
 
   [Function(nameof(SayHello))]
-  public static void SayHello([ActivityTrigger] string contributorName, FunctionContext executionContext)
+  public async Task SayHello([ActivityTrigger] string contributorName, FunctionContext executionContext)
   {
     var message = $"Hello {contributorName}. 👋 Thanks for your contributions!";
     var logger = executionContext.GetLogger(nameof(SayHello));
-    logger.LogInformation(message); // Pretending that this notification is sent to the contributor
+    await _notificationService.SendSmsNotification(contributorName, message);
   }
 
   [Function(nameof(AuditPhoneNumberForComplianceMethod))]
