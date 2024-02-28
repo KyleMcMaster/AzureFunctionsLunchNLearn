@@ -11,6 +11,7 @@ namespace NotificationFunctions.Triggers;
 public class HttpNotificationTrigger(ILogger<HttpNotificationTrigger> logger, ISmsNotificationService notificationService)
 {
   private readonly ILogger<HttpNotificationTrigger> _logger = logger;
+  private readonly ISmsNotificationService _notificationService = notificationService;
 
   [Function(nameof(HttpNotificationTrigger))]
   public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequest req)
@@ -26,7 +27,7 @@ public class HttpNotificationTrigger(ILogger<HttpNotificationTrigger> logger, IS
     }
 
     var message = $"Hello {contributor.Name}. 👋 Thanks for your contributions!";
-    await notificationService.SendSmsNotification(contributor.PhoneNumber!, message);
+    await _notificationService.SendSmsNotification(contributor.PhoneNumber!, message);
 
     return new OkObjectResult(new { Message = message });
   }
