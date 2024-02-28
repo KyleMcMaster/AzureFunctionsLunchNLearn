@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using NotificationFunctions.DemoServices;
-using Clean.Architecture.Core.Interfaces;
 
 var host = new HostBuilder()
   .ConfigureFunctionsWebApplication()
